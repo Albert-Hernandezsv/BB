@@ -1,6 +1,6 @@
 <?php
 
-if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Contabilidad" || $_SESSION["rol"] == "Facturación"){
+if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Contabilidad"){
 } else {
     echo '<script>
     window.location = "inicio";
