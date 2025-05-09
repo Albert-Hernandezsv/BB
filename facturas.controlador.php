@@ -2249,8 +2249,8 @@ class ControladorFacturas{
 				
 			
 
-				self::enviarCorreo($empresa["correo"], $empresa["correo"], $subject, $message, $pdfUrl, $factura["firmaDigital"], $jsonContent.$factura["firmaDigital"]);
-				self::enviarCorreo($empresa["correo"], $cliente["correo"], $subject, $message, $pdfUrl, $factura["firmaDigital"], $jsonContent.$factura["firmaDigital"]);
+				self::enviarCorreo($empresa["correo"], $empresa["correo"], $subject, $message, $pdfUrl, $factura["codigoGeneracion"], $jsonContent.$factura["firmaDigital"]);
+				self::enviarCorreo($empresa["correo"], $cliente["correo"], $subject, $message, $pdfUrl, $factura["codigoGeneracion"], $jsonContent.$factura["firmaDigital"]);
 
 				
 
