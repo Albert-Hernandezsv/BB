@@ -2278,18 +2278,18 @@ class ControladorFacturas{
 	private static function enviarCorreo($from, $to, $subject, $message, $pdfUrl, $codigoGenera, $jsonContent){
 		$mail = new PHPMailer(true);
 		$mail->isSMTP();
-		$mail->Host = 'smtp.titan.email';
+		$mail->Host = 'smtp.gmail.com';
 		$mail->SMTPAuth = true;
-		//$mail->SMTPDebug = 1;  // Nivel 3 de depuración para obtener más detalles
+		$mail->SMTPDebug = 2;  // Nivel 3 de depuración para obtener más detalles
 		// Establecer la codificación a UTF-8
 		$mail->CharSet = 'UTF-8';
 
 		$mail->Username = $from;
-		$mail->Password = 'Mampi0712_'; // Usa variables seguras para contraseñas
-		$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-		$mail->Port = 465;
+		$mail->Password = 'rrfx rejp omnq fvmw'; // Usa variables seguras para contraseñas
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+		$mail->Port = 587;
 
-		$mail->setFrom($from, 'QwertySystems');
+		$mail->setFrom($from, 'Jc');
 		$mail->addAddress($to);
 		$mail->Subject = $subject;
 		$mail->Body = $message;
