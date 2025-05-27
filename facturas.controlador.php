@@ -2238,19 +2238,20 @@ class ControladorFacturas{
 					return base64_decode($data);  // Decodificar Base64
 				}
 				
-				// JWT a decodificar (reemplaza esto con tu JWT real)
-				$jwt = $factura["firmaDigital"];  // El JWT completo
-				
-				// Decodificar el JWT
-				$decoded = decodeJWT($jwt);
+				$jwt = $factura["firmaDigital"]; // Firma digital (JWT)
+				$decoded = decodeJWT($jwt);      // Decodificamos el JWT
 
-				// Ahora que tenemos el contenido decodificado, generamos el archivo JSON
-				$jsonContent = json_encode($decoded, JSON_PRETTY_PRINT);
+				// Agregamos la firma y el sello como campos adicionales
+				$decoded["selloRecibido"] = $factura["sello"];
+				$decoded["firmaElectronica"] = $jwt;
 				
+
+				// Codificamos el JSON con los campos añadidos
+				$jsonConFirma = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 			
 
-				self::enviarCorreo($empresa["correo"], $empresa["correo"], $subject, $message, $pdfUrl, $factura["codigoGeneracion"], $jsonContent.$factura["firmaDigital"]);
-				self::enviarCorreo($empresa["correo"], $cliente["correo"], $subject, $message, $pdfUrl, $factura["codigoGeneracion"], $jsonContent.$factura["firmaDigital"]);
+				self::enviarCorreo($empresa["correo"], $empresa["correo"], $subject, $message, $pdfUrl, $factura["codigoGeneracion"], $jsonConFirma);
+				self::enviarCorreo($empresa["correo"], $cliente["correo"], $subject, $message, $pdfUrl, $factura["codigoGeneracion"], $jsonConFirma);
 
 				
 
@@ -2330,7 +2331,7 @@ class ControladorFacturas{
 			 file_put_contents($jsonFilePath, $jsonContent);
 	 
 			 // Adjuntamos el archivo JSON
-			 $mail->addAttachment($jsonFilePath, 'FacturaData.json');  // Adjuntar el archivo JSON
+			 $mail->addAttachment($jsonFilePath, $codigoGenera . '.json');  // Adjuntar el archivo JSON
 	 
 			
 			// Enviar correo
