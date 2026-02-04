@@ -502,6 +502,23 @@ class ModeloFacturas{
         $stmt = null;
     }
 
+	static public function mdlIngresarAuditoria($tabla, $datos) {
+
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(numero_anterior, numero_asignado, controlador) VALUES (:numero_anterior, :numero_asignado, :controlador)");
+
+		$stmt->bindParam(":numero_anterior", $datos["numero_anterior"], PDO::PARAM_STR);
+		$stmt->bindParam(":numero_asignado", $datos["numero_asignado"], PDO::PARAM_STR);
+        $stmt->bindParam(":controlador", $datos["controlador"], PDO::PARAM_STR);		
+
+        if($stmt->execute()) {
+            return "ok";    
+        } else {
+            return "error";
+        }
+
+        $stmt->close();
+        $stmt = null;
+    }
 	/*=============================================
 	REGISTRO DE FACTURA LOCAL CONTINGENCIA
 	=============================================*/
