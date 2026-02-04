@@ -48,9 +48,7 @@ if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Bodega" || $_SESSION["rol
         <button class="btn btn-danger" data-toggle="modal" data-target="#modalCrearProducto">Crear producto</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearProveedor">Crear proveedor</button>
         <button class="btn btn-info" data-toggle="modal" data-target="#modalVerProveedores">  Ver proveedores</button>
-        <button class="btn btn-primary" id="imprimirInventario" onclick="descargarPdf2()">Descargar reporte como pdf</button>
-        <button class="btn btn-success" onclick="exportarExcel2()">Descargar reporte como Excel</button> 
-        <button class="btn btn-dark" onclick="location.href='kardex'">Sistema kardex</button>
+        
 <br><br>
       </div>
 
@@ -71,7 +69,7 @@ if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Bodega" || $_SESSION["rol
               $item = "id";
               $valor = $filtroNombre;
 
-              $productos = ControladorProductos::ctrMostrarProductos($item, $valor);
+              $productos = ControladorProductos::ctrMostrarProductos($item, $valor, $optimizacion);
               $filtroNombreF = $productos["nombre"];
             }
 
@@ -191,7 +189,7 @@ if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Bodega" || $_SESSION["rol
                               $item = null;
                               $valor = null;
                       
-                              $productos = ControladorProductos::ctrMostrarProductos($item, $valor);
+                              $productos = ControladorProductos::ctrMostrarProductos($item, $valor, $optimizacion);
                       
                             foreach ($productos as $key => $value){
                                 echo '
@@ -205,6 +203,8 @@ if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Bodega" || $_SESSION["rol
                 </div>
 
             </div>
+
+            
 
             <div class="col-xl-2 col-xs-12">
 
@@ -278,7 +278,7 @@ if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Bodega" || $_SESSION["rol
                               $item = null;
                               $valor = null;
                       
-                              $productos = ControladorProductos::ctrMostrarProductos($item, $valor);
+                              $productos = ControladorProductos::ctrMostrarProductos($item, $valor, $optimizacion);
                       
                             foreach ($productos as $key => $value){
                                 echo '
@@ -448,6 +448,25 @@ if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Bodega" || $_SESSION["rol
 
         </script>
         <br>
+        <div class="col-xl-3 col-xs-12">
+                <?php
+                  $optimizacion;
+                  if(!isset($_GET["optimizar"])){
+                    $optimizacion = "si";
+                    echo "<div class='form-check form-switch'>
+                      <input class='form-check-input' type='checkbox' role='switch' id='flexSwitchCheckChecked' onclick=\"location.href='index.php?ruta=inventario&filtroNombre=".$filtroNombre."&filtroTipo=".$filtroTipo."&filtroCategoria=".$filtroCategoria."&filtroCodigo=".$filtroCodigo."&filtroStock=".$filtroStock."&optimizar=no'\" checked>
+                      <label class='form-check-label' for='flexSwitchCheckChecked'>Optimizar tabla</label>
+                    </div>";
+                  } else {
+                    $optimizacion = "no";
+                    echo "<div class='form-check form-switch'>
+                      <input class='form-check-input' type='checkbox' role='switch' id='flexSwitchCheckChecked' onclick=\"location.href='index.php?ruta=inventario&filtroNombre=".$filtroNombre."&filtroTipo=".$filtroTipo."&filtroCategoria=".$filtroCategoria."&filtroCodigo=".$filtroCodigo."&filtroStock=".$filtroStock."'\">
+                      <label class='form-check-label' for='flexSwitchCheckChecked'>Optimizar tabla</label>
+                    </div>";
+                  }
+              ?>
+            </div>
+        <br>
        <table class="table table-bordered table-striped dt-responsive tablas" id="inventario" width="100%">
          
         <thead>
@@ -480,7 +499,7 @@ if($_SESSION["rol"] == "Admin" || $_SESSION["rol"] == "Bodega" || $_SESSION["rol
           $item = null;
           $valor = null;
 
-          $productos = ControladorProductos::ctrMostrarProductos($item, $valor);
+          $productos = ControladorProductos::ctrMostrarProductosOptimizados($item, $valor, $optimizacion);
 
           foreach ($productos as $key => $value){
             $item1 = "id";

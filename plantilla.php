@@ -208,7 +208,7 @@ if ($horaActual === $horaProgramada1 || $horaActual === $horaProgramada2 || $hor
 
 
   <!-- Enlaza el JS de Bootstrap y el script personalizado -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
 
 
   <!-- EDITAR TITULOS --> 
