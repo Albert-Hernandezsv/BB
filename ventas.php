@@ -657,7 +657,7 @@ date_default_timezone_set('America/El_Salvador');
                                $ventaExenta += ($producto["precioSinImpuestos"] - $producto["descuento"]) * $producto["cantidad"];
                                $pagoAcuentas += ($producto["precioSinImpuestos"] - $producto["descuento"]) * $producto["cantidad"];
                              } else {
-                               $ventaGravada += ($producto["precioConIva"] - $producto["descuentoConIva"]) * $producto["cantidad"];
+                               $ventaGravada += ($producto["precioSinImpuestos"] - $producto["descuento"]) * $producto["cantidad"];
                                $pagoAcuentas += (($producto["precioConIva"] - $producto["descuentoConIva"]) * $producto["cantidad"]) / 1.13;
                                $iva += ((($producto["precioConIva"] - $producto["descuentoConIva"]) * $producto["cantidad"]) / 1.13) * 0.13;
                              }
